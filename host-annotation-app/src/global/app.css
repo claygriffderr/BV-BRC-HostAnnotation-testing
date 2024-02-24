@@ -1,0 +1,231 @@
+/*
+  Global App CSS (Document Level Styles)
+  ----------------------
+  Use this file for styles that should be applied to all components.
+  For example, "font-family" within the "body" selector is a CSS property
+  most apps will want applied to all components.
+
+  Any global CSS variables should also be applied here.
+*/
+
+/*
+  The imports below are needed to include our light dom css for global styles such as fonts and colors.
+  You can comment out any of these imports if you do not need that css. For example, if you have your own
+  global font family css then you can comment out the typography.css import.
+*/
+
+/** Core CSS required for ionic components to work property */
+@import '~@ionic/core/css/core.css';
+
+/** Basic CSS for apps built with Ionic */
+@import '~@ionic/core/css/normalize.css';
+@import '~@ionic/core/css/structure.css';
+@import '~@ionic/core/css/typography.css';
+
+/** Optional CSS utils that can be commented out */
+@import '~@ionic/core/css/padding.css';
+@import '~@ionic/core/css/float-elements.css';
+@import '~@ionic/core/css/text-alignment.css';
+@import '~@ionic/core/css/text-transformation.css';
+@import '~@ionic/core/css/flex-utils.css';
+
+/*
+  The CSS Variables below can be used to theme your app.
+  For more info on CSS variables check out:
+  https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables
+
+  More info about color theming using Ionic:
+  https://ionicframework.com/docs/theming/color-generator
+*/
+
+@import './variables.css';
+
+
+.page-container {
+   align-items: flex-start;
+   display: flex;
+   flex-flow: column nowrap;
+   justify-content: flex-start;
+   min-height: 100vh;
+   overflow-x: hidden;
+   width: 100vw;
+}
+
+.centered-body {
+   align-items: center;
+   display: flex;
+   /*flex: 1 0 auto;*/
+   flex-direction: column;
+   justify-content: flex-start;
+   overflow-y: scroll;
+   width: 100%;
+}
+.centered-body ion-card {
+   flex: 1 0 auto;
+   min-width: var(--bvbrc--default-content-width);
+}
+
+main {
+   display: flex;
+   flex: 1 1 auto;
+   flex-direction: column;
+   overflow: auto;
+   width: 100%;
+}
+
+/* A panel that contains a data table. */
+.data-table-panel {
+   align-items: center;
+   display: flex;
+   flex: 1 1 auto;
+   flex-flow: column nowrap;
+   justify-content: flex-start;
+   margin-bottom: 4.0rem;
+   width: 100vw;
+}
+
+.data-table-result-count {
+   margin-bottom: 1.0rem;
+}
+
+/* Control(s) displayed above a data table or ion-card. */
+.controls-panel {
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: flex-end;
+   align-items: flex-start;
+   width: 100%;
+}
+
+/* Default styles for a DataTable */
+table.dataTable {
+   margin-left: 0;
+}
+table.dataTable thead tr {
+   background-color: #777;
+}
+table.dataTable thead th {
+   color: #fff !important;
+   font-weight: normal !important;
+}
+table.dataTable tbody tr:hover {
+   background-color: rgba(255,196,9,0.3);
+   cursor: pointer;
+}
+
+/* This is displayed when no data is available for display in a data table. */
+.data-table-panel .no-data {
+   align-items: center;
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: center;
+}
+
+#DataTables_Table_0_length {
+   font-size: 0.9rem;
+   margin-bottom: 0.5rem;
+}
+
+
+labeled-control {
+   --labeled-control--control-group-min-width: 100%;
+}
+
+/* Override default Ionic framework CSS */
+ionic-button {
+   text-transform: none !important;
+}
+ion-button.save-button {
+   background-color: var(--ion-color-success);
+}
+
+
+
+
+/* Mobile devices (phones, <= 600px) */
+@media only screen and (max-width: 600px) {
+    
+   .centered-body {
+      padding-top: 5.0rem;
+   }
+   .centered-body ion-card {
+      /* TODO: provide default for mobile version of this */
+      min-width: auto; /*var(--bvbrc--default-content-width);*/
+   }
+
+   /* A panel that contains a data table. */
+   .data-table-panel {
+      padding-top: 60px;
+   }
+
+   /* Control(s) displayed above a data table. */
+   .data-table-panel .controls-panel {
+      width: 100%;
+   }
+
+   /* Default styles for a DataTable */
+   table.dataTable {
+      margin-top: 3.0rem !important;
+      margin-left: 0;
+      min-width: 1000px !important;
+   }
+
+   /* This is displayed when no data is available for display in a data table. */
+   .data-table-panel .no-data {
+      font-size: 1.25rem;
+      min-width: 1000px !important;
+   }
+
+   ion-button ion-icon {
+      margin-right: 0.5rem;
+   }
+
+   labeled-control {
+      --labeled-control--control-width: 100px;
+   }
+}
+
+/* Browser / larger devices (Computers, landscape tablets, 601px and up) */
+@media only screen and (min-width: 601px) {
+   
+   .centered-body {
+      padding-top: 5.0rem;
+   }
+   .centered-body ion-card {
+      /* TODO: provide default for mobile version of this */
+      min-width: var(--bvbrc--default-content-width);
+   }
+
+   /* A panel that contains a data table. */
+   .data-table-panel {
+      padding-top: 60px;
+   }
+
+   /* Control(s) displayed above a data table. 
+   .data-table-panel .controls-panel {
+      width: 1000px;
+   }*/
+
+   /* Default styles for a DataTable */
+   table.dataTable {
+      margin-top: 3.0rem !important;
+      margin-left: 0;
+      min-width: 1000px !important;
+   }
+
+   /* This is displayed when no data is available for display in a data table. */
+   .data-table-panel .no-data {
+      font-size: 1.25rem;
+   }
+
+   ion-button ion-icon {
+      margin-right: 0.5rem;
+   }
+
+   labeled-control {
+      --labeled-control--control-width: 200px;
+   }
+
+}
+
+

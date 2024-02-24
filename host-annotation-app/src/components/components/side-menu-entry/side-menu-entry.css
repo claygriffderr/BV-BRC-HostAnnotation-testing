@@ -1,0 +1,44 @@
+:host {
+   display: block;
+   width: 100%;
+}
+
+:host .container {
+   align-items: center;
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: flex-start;
+   padding: 10px 0 10px 0;
+   width: 100%;
+}
+
+:host .container:hover {
+   background-color: #777; /*var(--custom--sidemenu-bg-hover, var(--default--sidemenu-bg-hover));*/
+   color: #fff; /*var(--custom--sidemenu-color-hover, var(--default--sidemenu-color-hover));*/
+   cursor: pointer;
+   transition-timing-function: ease-in-out;
+}
+
+/* The icon */
+:host .container ion-icon {
+   color: #777; /*var(--custom--sidemenu-icon-inactive, var(--default--sidemenu-icon-inactive));*/
+   display: inline-block;
+   font-size: 1.5rem;
+   width: 20%;
+}
+
+:host .container:hover ion-icon {
+   color: #ccc; /*var(--custom--sidemenu-icon-active, var(--default--sidemenu-icon-active)); */
+}
+
+/* The label */
+:host .container .label {
+   color: black; /*var(--custom--sidemenu-text-inactive, var(--default--sidemenu-text-inactive));*/
+   display: inline-block;
+   font-size: 1.0rem;
+   width: 80%;
+}
+
+:host .container:hover .label {
+   color: var(--custom--sidemenu-text-active, var(--default--sidemenu-text-active));
+}

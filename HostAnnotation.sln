@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostAnnotation", "HostAnnotation\HostAnnotation.csproj", "{478FA963-18D9-49F8-A981-C8B51DA11E4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostAnnotationWeb", "HostAnnotationWeb\HostAnnotationWeb.csproj", "{0537035F-4AC2-463A-9F20-7BB1D7BD433B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{478FA963-18D9-49F8-A981-C8B51DA11E4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{478FA963-18D9-49F8-A981-C8B51DA11E4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{478FA963-18D9-49F8-A981-C8B51DA11E4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{478FA963-18D9-49F8-A981-C8B51DA11E4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0537035F-4AC2-463A-9F20-7BB1D7BD433B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0537035F-4AC2-463A-9F20-7BB1D7BD433B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0537035F-4AC2-463A-9F20-7BB1D7BD433B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0537035F-4AC2-463A-9F20-7BB1D7BD433B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5676F664-5F3F-48F3-8177-AAA6F9EA1AB4}
+	EndGlobalSection
+EndGlobal

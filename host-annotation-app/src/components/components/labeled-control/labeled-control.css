@@ -1,0 +1,238 @@
+/*
+CSS variables:
+
+Label
+--labeled-control--label-color
+--labeled-control--label-font-weight
+--labeled-control--label-required-color
+
+Control group
+--labeled-control--control-group-min-width
+
+Control
+--labeled-control--control-bgcolor
+--labeled-control--control-border-color
+--labeled-control--control-border-width-bottom
+--labeled-control--control-border-width-left
+--labeled-control--control-border-width-right
+--labeled-control--control-border-width-top
+--labeled-control--control-border-focus-color
+--labeled-control--control-color
+--labeled-control--control-height (for textarea)
+--labeled-control--control-margin-right
+--labeled-control--control-padding-bottom
+--labeled-control--control-padding-left
+--labeled-control--control-padding-right
+--labeled-control--control-padding-top
+--labeled-control--control-width
+
+--labeled-control--text-after
+--labeled-control--text-before
+
+Status
+--labeled-control--error
+--labeled-control--success
+--labeled-control--warning
+
+*/
+
+:host {
+   display: block;
+}
+
+/* The container */
+:host .container {
+   margin-bottom: var(--bvbrc--labeled-control--container-margin-bottom, 1.0rem);
+   width: 100%;
+}
+
+:host .container[data-orient="left"] {
+   align-items: center;
+   display: flex;
+   flex-flow: row;
+   justify-content: flex-start;
+}
+
+:host .container[data-orient="top"] {
+   align-items: flex-start;
+   display: flex;
+   flex-flow: column;
+   justify-content: flex-start;
+}
+
+/* The label */
+:host .label {
+   font-weight: normal;
+   /*color: var(--labeled-control--label-color, var(--custom--body-color, var(--default--body-color)));
+   font-weight: var(--labeled-control--label-font-weight, normal);*/
+   white-space: nowrap;
+}
+
+:host .container[data-orient="left"] .label:not(:empty) {
+   display: inline-block;
+   margin-right: 5px;
+}
+
+:host .container[data-orient="top"] .label:not(:empty) {
+   display: block;
+   margin-bottom: 5px;
+}
+
+:host .label.required::before {
+   color: var(--labeled-control--label-required-color, inherit);
+   content: "*";
+   left: -0.25rem;
+   position: relative;
+}
+
+
+/* The control */
+:host .control-group {
+   align-items: center;
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: stretch;
+   width: var(--labeled-control--control-group-min-width, 100%);
+   /* TODO: will this work everywhere? */
+}
+
+
+:host .control {
+   color: var(--labeled-control--control-color, inherit);
+   flex: 1 1 auto;
+   margin-right: var(--labeled-control--control-margin-right, 0);
+   transition: border-color 0.2s;
+}
+
+:host input.control,
+:host select.control,
+:host textarea.control {
+   background-color: var(--labeled-control--control-bgcolor, inherit);
+   border-color: var(--labeled-control--control-border-color, inherit);
+   border-style: solid;
+   border-bottom-width: var(--labeled-control--control-border-width-bottom, 1px);
+   border-left-width: var(--labeled-control--control-border-width-left, 1px);
+   border-right-width: var(--labeled-control--control-border-width-right, 1px);
+   border-top-width: var(--labeled-control--control-border-width-top, 1px);
+   outline-color: transparent;
+   outline-width: 0;
+   padding-bottom: var(--labeled-control--control-padding-bottom, 5px);
+   padding-left: var(--labeled-control--control-padding-left, 5px);
+   padding-right: var(--labeled-control--control-padding-right, 5px);
+   padding-top: var(--labeled-control--control-padding-top, 5px);
+   width: var(--labeled-control--control-width, fill);
+}
+
+:host input.control:focus,
+:host select.control:focus,
+:host textarea.control:focus {
+   border-color: var(--labeled-control--control-border-focus-color, var(--ion-color-primary-shade));
+}
+
+:host textarea.control {
+   height: var(--labeled-control--control-height, inherit);
+}
+
+:host select.control option:checked,
+:host select.control option:focus,
+:host select.control option:active {
+   background-color: var(--custom--status-primary, var(--ion-color-primary-tint));
+   color: var(--custom--status-primary-contrast, var(--ion-color-primary-contrast));
+}
+
+/* Error status */
+:host .container[data-status="error"] .control,
+:host .container[data-status="error"] .control:focus {
+   border-color: var(--labeled-control--error, var(--ion-color-danger));
+   outline-color: var(--labeled-control--error, var(--ion-color-danger));
+}
+
+/* Warning status */
+:host .container[data-orient="warning"] .control {
+   border-color: var(--labeled-control--warning, var(--ion-color-warning));
+   outline-color: var(--labeled-control--warning, var(--ion-color-warning));
+}
+
+:host .text-after:not(:empty) {
+   display: inline-block;
+   /*margin-left: 0.3rem;*/
+}
+
+:host .text-before:not(:empty) {
+   display: inline-block;
+   /*margin-right: 0.3rem;*/
+}
+
+/* The lower status */
+:host .container .lower-status {
+   display: none;
+}
+
+:host .container[data-status="error"] .lower-status {
+   color: var(--labeled-control--error, var(--ion-color-danger));
+   display: block;
+}
+
+:host .container[data-status="info"] .lower-status {
+   color: var(--labeled-control--info, var(--ion-color-info));
+   display: block;
+}
+
+:host .container[data-status="warning"] .lower-status {
+   color: var(--labeled-control--warning, var(--ion-color-warning));
+   display: block;
+}
+
+/* The right status */
+:host .container .right-status {
+   display: none;
+}
+
+:host .container[data-status="success"] .right-status {
+   color: var(--labeled-control--success, var(--ion-color-success));
+   display: inline-block;
+   margin-left: 5px;
+   opacity: 1.0;
+   transition: opacity 4s;
+}
+
+:host .container[data-status="success"] .right-status.success-fade {
+   opacity: 0;
+}
+
+
+
+/* Mobile devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+   :host .label,
+   :host .control,
+   :host .text-after,
+   :host .text-before {
+      font-size: 0.9rem;
+   }
+
+   :host .container .lower-status {
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+   }
+}
+
+/* Larger devices (Computers, landscape tablets, 601px and up) */
+@media only screen and (min-width: 601px) {
+
+   :host .control,
+   :host .text-after,
+   :host .text-before {
+      font-size: 1.0rem;
+   }
+
+   :host .label {
+      font-size: 0.9rem;
+   }
+
+   :host .container .lower-status {
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+   }
+}

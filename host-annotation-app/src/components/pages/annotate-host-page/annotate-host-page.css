@@ -1,0 +1,73 @@
+
+
+annotate-host-page .search-controls {
+   align-content: flex-start;
+   border-collapse: separate;
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: flex-start;
+   margin: 0 0 2.0rem 0;
+   min-width: 600px;
+   max-width: 800px;
+}
+
+annotate-host-page .host-text {
+   border: 1px solid var(--ion-color-medium);
+   border-radius: .25rem 0 0 .25rem;
+   border-right-width: 0;
+   padding: .375rem .75rem;
+   font-size: 1.0rem;
+   outline: none;
+   margin-right: 0;
+   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+   width: 400px;
+}
+
+annotate-host-page .host-text:focus {
+   border-color: var(--ion-color-primary) !important;
+   box-shadow: var(--ion-color-primary) 0 0 3px 0 !important;
+   -moz-box-shadow: var(--ion-color-primary) 0 0 3px 0 !important;
+   -webkit-box-shadow: var(--ion-color-primary) 0 0 3px 0 !important;
+}
+
+annotate-host-page ion-button {
+   --border-radius: 0 5px 5px 0;
+   --border-width: 0;
+   font-size: 0.9rem;
+   margin: 0;
+}
+
+annotate-host-page ion-card-header {
+   margin-bottom: 1.0rem;
+}
+annotate-host-page ion-card-header ion-card-title {
+   font-weight: bold;
+}
+
+annotate-host-page .annotated-host-table {
+   width: 800px;
+}
+annotate-host-page .annotated-host-table td {
+   width: 50%;
+}
+
+
+annotate-host-page labeled-control {
+   --labeled-control--control-border-color: #ccc;
+   --labeled-control--control-border-width-bottom: 1px;
+   --labeled-control--control-border-width-left: 0;
+   --labeled-control--control-border-width-right: 0;
+   --labeled-control--control-border-width-top: 0;
+   --labeled-control--control-color: #000;
+   --labeled-control--control-padding-left: 0;
+   
+   margin-bottom: 2.0rem;
+}
+
+annotate-host-page labeled-control[attr-key="status"] {
+   margin-bottom: -0.5rem;
+}
+
+annotate-host-page .col-1 labeled-control {
+   --labeled-control--control-margin-right: 3.0rem;
+}

@@ -1,0 +1,54 @@
+:host {
+  display: block;
+}
+
+
+curated-words-page .data-table-panel {
+   align-items: center;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   margin-bottom: 5.0rem;
+   width: 100%;
+}
+curated-words-page .no-data {
+   align-items: center;
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   margin: 1.0rem 0 5.0rem 0;
+}
+
+curated-words-page .top-controls {
+   align-items: center;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   margin-bottom: 1.0rem;
+   min-width: 600px;
+}
+
+
+/* curated-words-page table.words {
+   min-width: 600px;
+   width: unset !important;
+}*/
+
+/* The "no data available" message/panel */
+curated-words-page .data-table-panel .no-data[data-is-visible="false"] {
+   display: none;
+}
+curated-words-page .data-table-panel .no-data[data-is-visible="true"] {
+   display: block;
+}
+
+/* The container of the curated words table */
+curated-words-page .data-table-panel .table-container[data-is-visible="false"] {
+   display: none;
+}
+curated-words-page .data-table-panel .table-container[data-is-visible="true"] {
+   display: block;
+}
+curated-words .table-container .dataTables_wrapper .dataTables_length {
+   margin-bottom: 1.0rem !important;
+}

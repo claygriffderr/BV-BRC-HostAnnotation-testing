@@ -1,0 +1,47 @@
+
+search-panel .search-controls {
+   align-content: flex-start;
+   border-collapse: separate;
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: flex-start;
+   margin: 0 0 2.0rem 0;
+   max-width: 600px;
+}
+
+search-panel .search-text {
+   border: 1px solid var(--ion-color-medium);
+   border-radius: .25rem 0 0 .25rem;
+   border-right-width: 0;
+   padding: .375rem .75rem;
+   font-size: 1.0rem;
+   outline: none;
+   margin-right: 0;
+   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+   width: 560px;
+}
+
+/* A search panel in a dialog has less horizontal space available. */
+.modal-dialog search-panel .search-text {
+   width: 500px;
+}
+
+search-panel .search-text:focus {
+   border-color: var(--ion-color-primary) !important;
+   box-shadow: var(--ion-color-primary) 0 0 3px 0 !important;
+   -moz-box-shadow: var(--ion-color-primary) 0 0 3px 0 !important;
+   -webkit-box-shadow: var(--ion-color-primary) 0 0 3px 0 !important;
+}
+
+search-panel ion-button.search-button {
+   --border-radius: 0;
+   --border-width: 0;
+   margin: 0;
+}
+
+search-panel ion-button.clear-button {
+   --border-radius: 0 5px 5px 0;
+   --border-width: 0;
+   font-weight: normal !important;
+   margin: 0;
+}

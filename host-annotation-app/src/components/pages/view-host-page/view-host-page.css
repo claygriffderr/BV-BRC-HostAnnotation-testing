@@ -1,0 +1,36 @@
+
+
+view-host-page ion-card-header {
+   margin-bottom: 1.0rem;
+}
+view-host-page ion-card-header ion-card-title {
+   font-weight: bold;
+}
+
+view-host-page .annotated-host-table {
+   width: 800px;
+}
+view-host-page .annotated-host-table td {
+   width: 50%;
+}
+
+
+view-host-page labeled-control {
+   --labeled-control--control-border-color: #ccc;
+   --labeled-control--control-border-width-bottom: 1px;
+   --labeled-control--control-border-width-left: 0;
+   --labeled-control--control-border-width-right: 0;
+   --labeled-control--control-border-width-top: 0;
+   --labeled-control--control-color: #000;
+   --labeled-control--control-padding-left: 0;
+   
+   margin-bottom: 2.0rem;
+}
+
+view-host-page labeled-control[attr-key="status"] {
+   margin-bottom: -0.5rem;
+}
+
+view-host-page .col-1 labeled-control {
+   --labeled-control--control-margin-right: 3.0rem;
+}

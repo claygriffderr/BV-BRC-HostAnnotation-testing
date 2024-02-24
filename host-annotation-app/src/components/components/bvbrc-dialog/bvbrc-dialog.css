@@ -1,0 +1,106 @@
+:host {
+  display: block;
+}
+
+
+
+
+.modal-container {
+   align-items: center;
+   display: flex;
+   height: 100%;
+   justify-content: center;
+   left: 0;
+   position: absolute;
+   top: 0;
+   width: 100%;
+}
+.modal-container[data-is-open="true"] {
+   z-index: 100;
+}
+.modal-container[data-is-open="false"] {
+   z-index: -5;
+}
+
+/* The background */
+.modal-background {
+   background-color: rgba(0, 0, 0, 0.7);
+   left: 0;
+   min-height: 100%;
+   position: absolute;
+   top: 0;
+   width: 100%;
+}
+.modal-container[data-is-open="true"] .modal-background {
+   display: block;
+   z-index: 5;
+}
+.modal-container[data-is-open="false"] .modal-background {
+   display: none;
+   z-index: -5;
+}
+
+/* The visible dialog */
+.modal-dialog {
+   /*align-items: center;
+   display: flex;
+   flex-flow: column;
+   justify-content: center;*/
+   min-height: 250px;
+   min-width: 700px;
+} 
+.modal-container[data-is-open=true] .modal-dialog {
+   display: initial;
+   left: 50%;
+   transition: left 0.2s ease-in-out;
+   z-index: 200;
+}
+.modal-container[data-is-open=false] .modal-dialog {
+   display: none;
+   left: -1000px;
+   transition: left 0.2s ease-in-out;
+   z-index: -5px;
+} 
+
+.modal-header {
+   align-items: center;
+   background-color: rgb(100,100,100);
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
+   color: rgb(255,255,255);
+   display: flex;
+   flex: 0 0;
+   flex-flow: row nowrap;
+   justify-content: space-between;
+   padding: 15px;
+   width: 100%;
+} 
+.modal-header ion-icon {
+   color: rgb(230,230,230);
+}
+/*
+.modal-header .title {
+   display: inline-block;
+}
+*/
+.modal-body {
+   background-color: rgb(255,255,255);
+   display: flex;
+   flex: 1 1 auto;
+   flex-direction: column;
+   padding: 15px;
+   width: 100%;
+}
+
+.modal-footer {
+   align-items: center;
+   background-color: rgb(230,230,230);
+   border-bottom-left-radius: 10px;
+   border-bottom-right-radius: 10px;
+   display: flex;
+   flex: 0 0;
+   flex-flow: row nowrap;
+   justify-content: flex-end;
+   padding: 5px 15px;
+   width: 100%;
+}

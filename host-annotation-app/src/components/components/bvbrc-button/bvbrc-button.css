@@ -1,0 +1,208 @@
+/*
+CSS variables:
+
+Button:
+
+--button--background-color
+--button--border-bottom-left-radius
+--button--border-bottom-right-radius
+--button--border-bottom-width
+--button--border-color
+--button--border-left-width
+--button--border-right-width
+--button--border-top-left-radius
+--button--border-top-right-radius
+--button--border-top-width
+
+--button--margin-bottom
+--button--margin-left
+--button--margin-right
+--button--margin-top
+
+--button--padding-bottom
+--button--padding-left
+--button--padding-right
+--button--padding-top
+
+--button--width
+
+Icon:
+--button--icon-color
+--button--icon-color-active
+--button--icon-font-size
+
+Label:
+--button--label-color
+--button--label-color-active
+--button--label-font-size
+
+*/
+
+/* TEST */
+:host {
+   align-items: center;
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: center;
+   width: 100%;
+   /*width: var(--button--width, 100%);*/
+}
+
+:host button {
+   align-items: center;
+   background-color: var(--button--background-color, inherit);
+   border-color: var(--button--border-color, inherit);
+   border-radius: 3px;
+   border-bottom-left-radius: var(--button--border-bottom-left-radius, 5px);
+   border-bottom-right-radius: var(--button--border-bottom-right-radius, 5px);
+   border-bottom-width: var(--button--border-bottom-width, 1px);
+   border-left-width: var(--button--border-left-width, 1px);
+   border-right-width: var(--button--border-right-width, 1px);
+   border-style: solid;
+   border-top-left-radius: var(--button--border-top-left-radius, 5px);
+   border-top-right-radius: var(--button--border-top-right-radius, 5px);
+   border-top-width: var(--button--border-top-width, 1px);
+   cursor: pointer;
+   /* "display" is set by .block, .small, or .medium. */
+   flex-flow: row nowrap;
+   justify-content: center;
+   margin-bottom: var(--button--margin-bottom, 0);
+   margin-left: var(--button--margin-left, 0);
+   margin-right: var(--button--margin-right, 0);
+   margin-top: var(--button--margin-top, 0);
+   padding-bottom: var(--button--padding-bottom, 5px);
+   padding-left: var(--button--padding-left, 10px);
+   padding-right: var(--button--padding-right, 10px);
+   padding-top: var(--button--padding-top, 5px);
+}
+
+
+:host button.block {
+   display: flex;
+   width: var(--button--width, 100%);
+}
+:host button.small, :host button.medium {
+   display: inline-flex;
+   width: var(--button--width, auto);
+}
+
+/* Error button */
+:host button.error {
+   background-color: var(--bvbrc--status-error, inherit);
+   border-color: var(--bvbrc--status-error-border, inherit);
+   color: var(--bvbrc--status-error-contrast, inherit); 
+}
+:host button.error:disabled {
+   background-color: var(--bvbrc--status-error-disabled, inherit);
+   border-color: var(--bvbrc--status-error-disabled-border, inherit);
+   color: var(--bvbrc--status-error-disabled-contrast, inherit); 
+}
+
+/* Info button */
+:host button.info {
+   background-color: var(--bvbrc--status-info, inherit);
+   border-color: var(--bvbrc--status-info-border, inherit);
+   color: var(--bvbrc--status-info-contrast, inherit); 
+}
+:host button.info:disabled {
+   background-color: var(--bvbrc--status-info-disabled, inherit);
+   border-color: var(--bvbrc--status-info-disabled-border, inherit);
+   color: var(--bvbrc--status-info-disabled-contrast, inherit); 
+}
+
+/* Primary button */
+:host button.primary {
+   background-color: var(--bvbrc--status-primary, inherit);
+   border-color: var(--bvbrc--status-primary-border, inherit);
+   color: var(--bvbrc--status-primary-contrast, inherit);
+}
+:host button.primary:disabled {
+   background-color: var(--bvbrc--status-primary-disabled, inherit);
+   border-color: var(--bvbrc--status-primary-disabled-border, inherit);
+   color: var(--bvbrc--status-primary-disabled-contrast, inherit);
+}
+
+/* Success button */
+:host button.success {
+   background-color: var(--bvbrc--status-success, inherit);
+   border-color: var(--bvbrc--status-success-border, inherit);
+   color: var(--bvbrc--status-success-contrast, inherit);
+}
+:host button.success:disabled {
+   background-color: var(--bvbrc--status-success-disabled, inherit);
+   border-color: var(--bvbrc--status-success-disabled-border, inherit);
+   color: var(--bvbrc--status-success-disabled-contrast, inherit);
+}
+
+/* Transparent button */
+:host button.transparent {
+   background-color: transparent;
+   color: var(--bvbrc--body-color, inherit);
+}
+
+/* Warning button */
+:host button.warning {
+   background-color: var(--bvbrc--status-warning, inherit);
+   border-color: var(--bvbrc--status-warning-border, inherit);
+   color: var(--bvbrc--status-warning-contrast, inherit);
+}
+:host button.warning:disabled {
+   background-color: var(--bvbrc--status-warning-disabled, inherit);
+   border-color: var(--bvbrc--status-warning-disabled-border, inherit);
+   color: var(--bvbrc--status-warning-disabled-contrast, inherit);
+}
+
+/* Icon */
+:host button icon {
+   color: var(--button--icon-color, inherit);
+}
+:host button:hover bvbrc-icon {
+   color: var(--button--icon-color-active, inherit);
+   cursor: pointer;
+}
+
+/* Label */
+:host button label {
+   color: var(--button--label-color, inherit);
+}
+:host button:hover label {
+   color: var(--button--label-color-active, inherit);
+   cursor: pointer;
+}
+
+
+/* Mobile devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+   
+   :host button.block label, :host button.medium label {
+       font-size: var(--button--label-font-size, 0.9rem);
+   }
+   :host button.small label {
+       font-size: var(--button--label-font-size, 0.7rem);
+   }
+
+   :host button bvbrc-icon.left {
+       margin-right: 0.2rem;
+   }
+   :host button bvbrc-icon.right {
+       margin-left: 0.2rem;
+   }
+}
+
+/* Larger devices (Computers, landscape tablets, 601px and up) */
+@media only screen and (min-width: 601px) {
+   
+   :host button.block label, :host button.medium label {
+       font-size: var(--button--label-font-size, 1.0rem);
+   }
+   :host button.small label {
+       font-size: var(--button--label-font-size, 0.8rem);
+   }
+
+   :host button bvbrc-icon.left {
+       margin-right: 0.3rem;
+   }
+   :host button bvbrc-icon.right {
+       margin-left: 0.3rem;
+   }
+}

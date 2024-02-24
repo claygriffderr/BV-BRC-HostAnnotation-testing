@@ -1,0 +1,20 @@
+:host {
+  display: block;
+}
+
+login-page .page-container ion-card-subtitle {
+   text-align: center;
+}
+
+login-page .page-container ion-card-content ion-button {
+   margin-top: 4.0rem;
+}
+
+
+login-page .centered-body .reset-password-link {
+   color: var(--ion-color-primary-shade);
+   cursor: pointer;
+   margin-top: 1.5rem;
+   text-align: center;
+   text-decoration: underline;
+}

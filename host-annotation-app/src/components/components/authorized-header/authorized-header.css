@@ -1,0 +1,98 @@
+
+
+/* 
+Custom CSS variables:
+
+--custom--header-bgcolor
+--custom--header-icon-color
+--custom--header-icon-hover-color
+--custom--header-title-color
+
+*/
+
+:host header {
+   align-items: center;
+   background-color: var(--bvbrc--header-panel-bg-color);
+   display: flex;
+   flex-flow: row wrap;
+   flex: 0 0 auto;
+   height: var(--bvbrc--header-panel-height);
+   justify-content: space-between;
+   width: 100vw;
+}
+/*
+   var(--bvbrc--header-panel-active-color);
+   var(--bvbrc--header-panel-inactive-color);
+   */
+
+/*
+:host header:after {
+   left: 0;
+   bottom: -5px;
+   background-position: left 0 top -2px;
+   position: absolute;
+   width: 100%;
+   height: 5px;
+   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==);
+   background-repeat: repeat-x;
+   content: "";
+}*/
+
+/* The menu button */
+:host header .menu-button {
+   align-items: center;
+   cursor: pointer;
+   display: flex;
+   justify-content: center;
+   left: 0.4rem;
+   position: absolute;
+}
+:host header .menu-button {
+   color: var(--bvbrc--header-panel-inactive-color);
+}
+:host header .menu-button:hover {
+   color: var(--bvbrc--header-panel-active-color);
+}
+
+:host header .menu-button.back-control {
+   font-size: 22px;
+}
+
+/* The user icon */
+:host header .user-control {
+   color: var(--bvbrc--header-panel-inactive-color);
+   padding-right: 0.5rem;
+}
+:host header .user-control:hover {
+   color: var(--bvbrc--header-panel-active-color);
+   cursor: pointer;
+}
+
+/* The page title */
+:host header .page-title {
+   align-items: center;
+   color: var(--bvbrc--header-panel-active-color);
+   display: flex;
+   flex: 1 1 auto;
+   flex-flow: row nowrap;
+   font-size: 14pt;
+   justify-content: center;
+}
+
+/* The application name */
+:host header .application-name {
+   align-items: center;
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: flex-start;
+}
+
+/* Mobile devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+}
+
+/* Larger devices (Computers, landscape tablets, 601px and up) */
+@media only screen and (min-width: 601px) {
+
+}

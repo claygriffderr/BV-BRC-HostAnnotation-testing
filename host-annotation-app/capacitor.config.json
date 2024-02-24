@@ -1,0 +1,8 @@
+{
+  "appId": "edu.uab.dev.hostannotationapp",
+  "appName": "host-annotation-app",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
