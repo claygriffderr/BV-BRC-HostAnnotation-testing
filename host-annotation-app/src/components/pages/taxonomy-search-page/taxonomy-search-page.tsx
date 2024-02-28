@@ -1,11 +1,12 @@
 
-import { Component, Element, Host, h } from '@stencil/core';
+import { Component, Element, Host, h, State } from '@stencil/core';
 import { TaxonomyService } from '../../../services/TaxonomyService';
 import DataTable from 'datatables.net-dt';
 import { HeaderControlType, NcbiNameClassLookup, PageKey, TaxonomyDB, TaxonomyDbLookup } from "../../../global/Types";
 import { ITaxonName } from "../../../models/ITaxonName";
 //import { Router } from "../../../helpers/Router";
 //import { Settings } from "../../../global/Settings";
+import { Utils } from "../../../helpers/Utils";
 
 
 @Component({
@@ -20,6 +21,10 @@ export class TaxonomySearchPage {
 
    filterTypesEl: HTMLSelectElement;
 
+   // When the page loads (before searching occurs) empty data is expected. After the search,
+   // however, if there are no results we will display a "No results" message.
+   isBeforeSearch: boolean = true;
+
    // The "no data available" Element.
    noDataEl: HTMLElement;
 
@@ -28,7 +33,7 @@ export class TaxonomySearchPage {
 
    tableContainerEl: HTMLTableElement;
 
-   taxa: ITaxonName[];
+   @State() taxa: ITaxonName[];
 
 
    async componentDidLoad() {
@@ -61,7 +66,6 @@ export class TaxonomySearchPage {
          await this.viewTaxon(taxonIdentifier);
       })
 
-      
       this.tableContainerEl.setAttribute("data-is-visible", "false");
       
       return;
@@ -143,6 +147,11 @@ export class TaxonomySearchPage {
 
       // Look for a filter type selection.
       if (!!this.filterTypesEl) { taxonomyDB = this.filterTypesEl.value; }
+
+      searchText_ = Utils.safeTrim(searchText_);
+      if (!searchText_ || searchText_.length < 3) { alert("Please enter at least 3 characters"); return; }
+
+      this.isBeforeSearch = false;
 
       // Call the web service
       this.taxa = await TaxonomyService.searchTaxonomyDBs(searchText_, taxonomyDB);

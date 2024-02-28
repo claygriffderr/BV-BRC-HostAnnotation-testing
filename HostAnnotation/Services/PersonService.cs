@@ -76,8 +76,7 @@ namespace HostAnnotation.Services {
 
             if (status_ == null) { status_ = Terms.user_status.active; }
 
-            string? passwordHash = UserSecurity.hashPassword(password_);
-
+            string? passwordHash = null;
             if (!Utils.isEmptyElseTrim(ref password_)) { passwordHash = UserSecurity.hashPassword(password_); }
 
             return _dataProvider.createPerson(createdBy_, email_!, firstName_!, lastName_!, ref message_, orgUID_, passwordHash, role_!.Value, status_.Value);

@@ -13,7 +13,8 @@ export const config: Config = {
          serviceWorker: null,
          baseUrl: 'https://myapp.local/',
          copy: [
-            { src: "../node_modules/datatables.net-dt/css/jquery.dataTables.min.css", dest: "assets/css/jquery.dataTables.min.css" }
+            { src: "../node_modules/datatables.net-dt/css/jquery.dataTables.min.css", dest: "assets/css/jquery.dataTables.min.css" },
+            { src: "../node_modules/sweetalert2/dist/sweetalert2.min.css", dest: "assets/css/sweetalert2.min.css" }
          ]
       }
    ]

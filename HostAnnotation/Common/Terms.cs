@@ -16,6 +16,8 @@ namespace HostAnnotation.Common {
         public enum vocabularies {
             unknown,
 
+            account_request_status,
+            account_request_type,
             api_role,
             curation_type,
             environment,
@@ -24,6 +26,26 @@ namespace HostAnnotation.Common {
             taxonomy_db,
             taxon_match_type,
             user_status
+        }
+
+
+        public enum account_request_status {
+            unknown,
+
+            completed,
+            error,
+            expired,
+            not_requested,
+            pending,
+            unable_to_send
+        }
+
+        public enum account_request_type {
+            unknown,
+
+            invite_user,
+            reset_password,
+            verify_email
         }
 
         public enum api_role {

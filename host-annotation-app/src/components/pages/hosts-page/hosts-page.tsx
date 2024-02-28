@@ -20,6 +20,8 @@ export class HostsPage {
 
    @State() hosts: IAnnotatedHost[];
 
+   // When the page loads (before searching occurs) empty data is expected. After the search,
+   // however, if there are no results we will display a "No results" message.
    isBeforeSearch: boolean = true;
 
    searchPanelEl: HTMLSearchPanelElement;

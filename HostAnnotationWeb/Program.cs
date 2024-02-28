@@ -75,6 +75,9 @@ builder.Services
     });
 
 
+// Add the account service.
+builder.Services.AddSingleton<IAccountService, AccountService>();
+
 // Add the annotation service.
 builder.Services.AddSingleton<IAnnotationService, AnnotationService>();
 

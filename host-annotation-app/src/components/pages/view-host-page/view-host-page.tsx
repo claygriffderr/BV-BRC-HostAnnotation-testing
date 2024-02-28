@@ -1,7 +1,7 @@
 
 import { Component, Element, Host, h } from '@stencil/core';
 import { AnnotationService } from "../../../services/AnnotationService";
-import { ControlType, HeaderControlType, LabelOrientation, TaxonomyDB, TaxonomyDbLookup } from "../../../global/Types";
+import { ControlType, HeaderControlType, LabelOrientation } from "../../../global/Types";
 import { IAnnotatedHost } from "../../../models/IAnnotatedHost";
 import { Utils } from "../../../helpers/Utils";
 

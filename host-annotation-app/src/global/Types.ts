@@ -174,7 +174,7 @@ export function NcbiNameClassLookup(nameClass_: NcbiNameClass): string {
 export enum PageKey {
    annotateHost = "annotateHost",
    createCuratedWord = "createCuratedWord",
-   curatedWords = "curatedWords",
+   curatedWords = "curation/curatedWords",
    editCuratedWord = "editCuratedWord",
    home = "curation/home",
    hosts = "curation/hosts",
@@ -265,6 +265,9 @@ export enum UserStatus {
 // Keys representing all available web services.
 export enum WebServiceKey {
 
+   // Account
+   resetPassword =  "resetPassword",
+   
    // Administrator services
    // TODO
 

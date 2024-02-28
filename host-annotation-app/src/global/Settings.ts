@@ -29,6 +29,9 @@ export class _Settings {
    // A lookup from web service keys to web service URLs (not including the full path).
    webServiceLookup: { [key_ in WebServiceKey]: string } = {
 
+      // Account
+      resetPassword: "resetPassword",
+      
       // Administrator services
       // TODO
 

@@ -1,7 +1,6 @@
 
 import Swal, { SweetAlertOptions, SweetAlertResult } from "sweetalert2";
 
-
 enum AlertIcon {
    error = "error",
    info = "info",
@@ -28,10 +27,14 @@ export class AlertBuilder {
       if (!title_) { title_ = DefaultTitles[icon_]; }
 
       let options: SweetAlertOptions = {
+         heightAuto: false,
          html: message_,
          icon: icon_,
+         target: "ion-nav",
          titleText: title_
       }
+
+      console.log(`sweetalert2 option target = ${options.target}`)
 
       if (onClose_) { options.didClose = () => onClose_() }
 
@@ -46,9 +49,11 @@ export class AlertBuilder {
 
       let options: SweetAlertOptions = {
          confirmButtonColor: "#5cb85c",
+         heightAuto: false,
          html: message_,
          icon: AlertIcon.question,
          showCancelButton: true,
+         target: "ion-nav",
          titleText: title_
       }
 
