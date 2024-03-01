@@ -1,132 +1,22 @@
-:host {
-   display: block;
+
+
+
+
+home-page ion-card-header ion-card-title {
+   font-size: 1.5rem;
+   font-weight: bold;
+   margin-bottom: 2.0rem;
+   text-align: center;
 }
-
-
-
-/* CSS variable test */
-#home-page {
-   --highlight-color: #4285f4;
-   --default-font-size: 14pt;
-   --minimized-label-font-size: 9pt;
+home-page ion-card-content {
+   min-height: 600px;
 }
-
-#home-page .input-group {
-   position: relative;
-   margin: 40px 0 20px;
+home-page ion-card-content .feature-row {
+   color: var(--ion-color-primary-tint);
+   font-size: 1.0rem;
+   margin-bottom: 0.5rem;
 }
-
-#home-page input {
-   font-size: var(--default-font-size);
-   padding: 10px 0 10px 0;
-   display: block;
-   /*width: 300px;*/
-   border: none;
-   border-bottom: 1px solid #757575;
-}
-
-#home-page input:focus {
-   outline: none;
-}
-
-#home-page label {
-   color: #999;
-   font-size: var(--default-font-size);
-   font-weight: normal;
-   position: absolute;
-   pointer-events: none;
-   /*left: 5px;*/
-   top: 10px;
-   transition: 0.2s ease all;
-   -moz-transition: 0.2s ease all;
-   -webkit-transition: 0.2s ease all;
-}
-
-#home-page input:focus~label,
-#home-page input:valid~label {
-   top: -10px;
-   font-size: var(--minimized-label-font-size);
-   color: var(--highlight-color);
-}
-
-#home-page .bar {
-   position: relative;
-   display: block;
-   /*width: 315px;*/
-}
-
-#home-page .bar:before,
-#home-page .bar:after {
-   content: '';
-   height: 2px;
-   width: 0;
-   bottom: 1px;
-   position: absolute;
-   background: var(--highlight-color);
-   transition: 0.2s ease all;
-   -moz-transition: 0.2s ease all;
-   -webkit-transition: 0.2s ease all;
-}
-
-#home-page .bar:before {
-   left: 50%;
-}
-
-#home-page .bar:after {
-   right: 50%;
-}
-
-#home-page input:focus~.bar:before,
-#home-page input:focus~.bar:after {
-   width: 50%;
-}
-
-#home-page .highlight {
-   position: absolute;
-   height: 60%;
-   width: 100px;
-   top: 25%;
-   left: 0;
-   pointer-events: none;
-   opacity: 0.5;
-}
-
-#home-page input:focus~.highlight {
-   -webkit-animation: inputHighlighter 0.3s ease;
-   -moz-animation: inputHighlighter 0.3s ease;
-   animation: inputHighlighter 0.3s ease;
-}
-
-/* animations */
-@-webkit-keyframes inputHighlighter {
-   from {
-      background: var(--highlight-color);
-   }
-
-   to {
-      width: 0;
-      background: transparent;
-   }
-}
-
-@-moz-keyframes inputHighlighter {
-   from {
-      background: var(--highlight-color);
-   }
-
-   to {
-      background: transparent;
-      width: 0;
-   }
-}
-
-@keyframes inputHighlighter {
-   from {
-      background: var(--highlight-color);
-   }
-
-   to {
-      background: transparent;
-      width: 0;
-   }
+home-page ion-card-content .feature-row:hover {
+   cursor: pointer;
+   text-decoration: underline;
 }

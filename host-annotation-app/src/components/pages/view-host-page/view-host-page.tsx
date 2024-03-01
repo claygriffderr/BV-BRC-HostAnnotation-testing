@@ -48,10 +48,23 @@ export class ViewHostPage {
 
       const taxonomyLink = Utils.CreateTaxonomyDbLink(this.annotatedHost.taxonomyDB, this.annotatedHost.taxonomyID);
 
+      /*
+         <tr>
+                                 <td colSpan={2}><labeled-control
+                                    controlType={ControlType.textArea} 
+                                    initialValue={this.annotatedHost.hostText || ""}
+                                    labelOrientation={LabelOrientation.top}
+                                    labelText="Host text"
+                                 ></labeled-control></td>
+                                 <td></td>
+                              </tr>
+
+      */
+
       return (
          <Host>
             <div class="page-container">
-               <authorized-header pageTitle="Annotated Host" controlType={HeaderControlType.menu}></authorized-header>
+               <authorized-header pageTitle="Annotated Host" controlType={HeaderControlType.back}></authorized-header>
                <main>
                   
                   <div class="data-table-panel">
@@ -62,6 +75,8 @@ export class ViewHostPage {
                         </ion-card-header>
 
                         <ion-card-content>
+
+                           <div class="host-name">"{this.annotatedHost.hostText}"</div>
 
                            <labeled-control
                               attributeKey="status"
@@ -79,6 +94,7 @@ export class ViewHostPage {
                            ></labeled-control>
 
                            <table class="annotated-host-table">
+                              
                               <tr>
                                  <td class="col-1"><labeled-control
                                     controlType={ControlType.text} 

@@ -1,10 +1,14 @@
 
-
+/*
 view-host-page ion-card-header {
    margin-bottom: 1.0rem;
-}
-view-host-page ion-card-header ion-card-title {
-   font-weight: bold;
+}*/
+
+view-host-page .host-name {
+   font-size: 1.0rem;
+   margin-bottom: 1.4rem;
+   max-width: 800px;
+   word-wrap: break-word;
 }
 
 view-host-page .annotated-host-table {
@@ -13,7 +17,6 @@ view-host-page .annotated-host-table {
 view-host-page .annotated-host-table td {
    width: 50%;
 }
-
 
 view-host-page labeled-control {
    --labeled-control--control-border-color: #ccc;
