@@ -1,0 +1,21 @@
+
+
+
+admin-home-page ion-card-header ion-card-title {
+   font-size: 1.5rem;
+   font-weight: bold;
+   margin-bottom: 2.0rem;
+   text-align: center;
+}
+admin-home-page ion-card-content {
+   min-height: 600px;
+}
+admin-home-page ion-card-content .feature-row {
+   color: var(--ion-color-primary-tint);
+   font-size: 1.0rem;
+   margin-bottom: 0.5rem;
+}
+admin-home-page ion-card-content .feature-row:hover {
+   cursor: pointer;
+   text-decoration: underline;
+}

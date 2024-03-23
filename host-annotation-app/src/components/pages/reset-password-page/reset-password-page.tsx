@@ -3,9 +3,8 @@ import { AccountService } from "../../../services/AccountService";
 import { AlertBuilder } from "../../../helpers/AlertBuilder";
 import { Component, Element, Host, h } from '@stencil/core';
 import { IResetPasswordResult } from "../../../models/IResetPasswordResult";
-import { PageKey } from "../../../global/Types";
+import { AccountRequestType, PageKey } from "../../../global/Types";
 import { Router } from "../../../helpers/Router";
-import { Settings } from "../../../global/Settings";
 import { Utils } from "../../../helpers/Utils";
 
 
@@ -15,11 +14,16 @@ import { Utils } from "../../../helpers/Utils";
 })
 export class ResetPasswordPage {
 
-
+   // The page Element
    @Element() el: HTMLResetPasswordPageElement;
 
+   // The user's first name
+   firstName: string;
+
+   // The password Element
    passwordEl: HTMLIonInputElement;
 
+   // The token parameter
    token: string;
 
 
@@ -29,9 +33,13 @@ export class ResetPasswordPage {
       this.token = Utils.safeTrim(this.token);
       if (!this.token) { throw new Error("Invalid token parameter"); }
 
+      // Get a person's first name using a request type and their account request token.
+      this.firstName = await AccountService.getNameFromToken(AccountRequestType.reset_password, this.token);
+      if (!this.firstName) { this.firstName = "(Unknown)"; }
 
       return;
    }
+
 
    async resetPassword() {
 
@@ -63,7 +71,7 @@ export class ResetPasswordPage {
 
                <ion-card>
                   <ion-card-header>
-                     <ion-card-title>{Settings.appLongName}</ion-card-title>
+                     <ion-card-title>Hello, {this.firstName}</ion-card-title>
                      <ion-card-subtitle>Please enter your new password and click "submit"</ion-card-subtitle>
                   </ion-card-header>
 

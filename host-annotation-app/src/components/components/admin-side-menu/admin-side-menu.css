@@ -1,0 +1,76 @@
+
+
+
+/* Container */
+admin-side-menu .menu-container {
+   background-color: white;
+   display: flex;
+   flex: 1 1 auto;
+   flex-direction: column;
+   min-height: 100%;
+   position: absolute;
+   top: 0px;
+   width: 250px;
+   z-index: 100;
+}
+admin-side-menu .side-menu.open .menu-container {
+   left: 0px;
+   transition: left 0.2s ease-in-out;
+}
+admin-side-menu .side-menu.closed .menu-container {
+   left: -1000px; /*-250px;*/
+   transition: left 0.2s ease-in-out;
+}
+
+/* Background */
+admin-side-menu .menu-background {
+   background-color: rgba(38,38,38, 0.3);
+   left: 0px;
+   min-height: 100%;
+   position: absolute;
+   top: 0px;
+   width: 100%;
+}
+admin-side-menu .side-menu.open .menu-background {
+   display: block;
+   z-index: 5;
+}
+admin-side-menu .side-menu.closed .menu-background {
+   display: none;
+   z-index: -5;
+}
+
+/* Header */
+admin-side-menu .menu-container .menu-header {
+   align-items: center;
+   background-color: #555; /*var(--custom--header-bgcolor, var(--default--header-bgcolor));*/
+   color: white; /*var(--custom--header-title-color, var(--default--header-title-color));*/
+   display: flex;
+   flex: 0 0;
+   flex-flow: row nowrap;
+   font-size: 14pt;
+   justify-content: flex-start;
+   min-height: 40px;
+   width: 100%;
+}
+admin-side-menu .menu-container .menu-header .label {
+   margin-left: 15px;
+}
+
+/* Body */
+admin-side-menu .menu-container .menu-body {
+   align-items: flex-start;
+   background-color: var(--custom--body-bgcolor, var(--default--body-bgcolor));
+   display: flex;
+   flex: 1 1 auto;
+   flex-flow: column nowrap;
+   justify-content: flex-start;
+   width: 100%;
+}
+admin-side-menu .menu-container .menu-body .menu-rows {
+   align-items: flex-start;
+   display: flex;
+   flex-flow: column;
+   justify-content: flex-start;
+   width: 100%;
+}

@@ -1,69 +1,27 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Text;
 
-using HostAnnotation.Utilities;
+
 
 namespace HostAnnotation.Models {
 
     internal class TextHistogram {
 
-        public readonly static char[] SYMBOLS = [
+        public readonly static char[] SYMBOLS = new char[] {
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
             '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
-        ];
+        };
 
-        public int id { get; set; }
-
-        public string? text { get; set; }
-
-        public Dictionary<string, int> histogram { get; set; }
-
-        // TODO: what's a good way to represent approximate locations of each letter?
+        
 
 
-        // C-tor
-        public TextHistogram() {
+        #region Create the histogram tables
 
-            // Initialize the histogram.
-            histogram = new Dictionary<string, int>();
-
-            // Initialize the count to zero for all symbols.
-            foreach (char symbol in SYMBOLS) {
-
-                // Prepend an underscore to the symbol when using it as a key.
-                histogram[$"_{symbol}"] = 0;
-            }
-        }
-
-        // C-tor
-        public TextHistogram(int id_, string? text_) {
-
-            id = id_;
-
-            if (Utils.isEmptyElseTrim(ref text_)) { throw new Exception("Invalid text"); }
-            text = text_!.ToLower();
-            // TODO: do we also need to filter/remove certain symbols?
-
-            // Initialize the histogram.
-            histogram = new Dictionary<string, int>();
-
-            // Initialize the count to zero for all symbols.
-            foreach (char symbol in SYMBOLS) {
-
-                // Prepend an underscore to the symbol when using it as a key.
-                histogram[$"_{symbol}"] = 0;
-            }
-
-            // Populate the histogram using the symbols in the text.
-            foreach (char symbol in text.ToCharArray()) {
-                if (histogram.ContainsKey($"_{symbol}")) { histogram[$"_{symbol}"]++; }
-            }
-        }
-
-
-        public string? createHostTokenHistogramTable() {
+        public static string? createHostTokenHistogramTable() {
 
             var sql = new StringBuilder();
             var defaults = new StringBuilder();
@@ -95,7 +53,7 @@ namespace HostAnnotation.Models {
         }
 
 
-        public string? createTaxonNameHistogramTable() {
+        public static string? createTaxonNameHistogramTable() {
 
             var sql = new StringBuilder();
             var defaults = new StringBuilder();
@@ -126,16 +84,35 @@ namespace HostAnnotation.Models {
             return sql.ToString();
         }
 
+        #endregion
 
-        public void generateColumnsAndValuesSQL(StringBuilder columns_, StringBuilder values_) {
+
+        protected void generateColumnsAndValuesSQL(ref StringBuilder columns_, string filteredText_, ref StringBuilder values_) {
 
             if (columns_ == null) { throw new Exception("Invalid columns (null)"); }
             if (values_ == null) { throw new Exception("Invalid values (null)"); }
 
-            foreach(string? key in histogram.Keys) {
+            // Just in case, convert the text to lowercase.
+            filteredText_ = filteredText_.ToLower();
+
+            var histogram = new Dictionary<char, int>();
+
+            // Populate the histogram with the characters in the filtered text.
+            foreach (char c in filteredText_.ToCharArray()) {
+
+                if (!SYMBOLS.Contains(c)) { continue; }
+
+                if (histogram.ContainsKey(c)) {
+                    histogram[c] += 1;
+                } else {
+                    histogram.Add(c, 1);
+                }
+            }
+
+            foreach (char key in histogram.Keys) {
 
                 // Add a column
-                columns_.AppendLine($",{key}");
+                columns_.AppendLine($", _{key}");
 
                 // Add a value
                 values_.Append($", {histogram[key]}");
@@ -149,22 +126,23 @@ namespace HostAnnotation.Models {
             var values = new StringBuilder();
 
             columns.AppendLine($"host_token_id");
-            values.AppendLine(id.ToString());
+            values.AppendLine($"{hostTokenID_}");
 
-            generateColumnsAndValuesSQL(columns, values);
+            generateColumnsAndValuesSQL(ref columns, filteredToken_, ref values);
 
             return $"INSERT INTO host_token_histogram ({columns}) VALUES ({values}) ";
         }
 
-        public string? generateTaxonNameHistogramInsert(string taxonName_, int taxonNameID_) {
+
+        public string? generateTaxonNameHistogramInsert(string filteredTaxonName_, int taxonNameID_) {
 
             var columns = new StringBuilder();
             var values = new StringBuilder();
 
             columns.AppendLine($"taxon_name_id");
-            values.AppendLine(id.ToString());
+            values.AppendLine($"{taxonNameID_}");
 
-            generateColumnsAndValuesSQL(columns, values);
+            generateColumnsAndValuesSQL(ref columns, filteredTaxonName_, ref values);
 
             return $"INSERT INTO taxon_name_histogram ({columns}) VALUES ({values}) ";
         }

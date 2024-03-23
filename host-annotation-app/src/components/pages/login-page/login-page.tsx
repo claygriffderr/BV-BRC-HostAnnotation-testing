@@ -175,6 +175,9 @@ export class LoginPage {
 
 
    render() {
+
+      // <div class="reset-password-link" onClick={async () => await this.resetPassword()}>Reset password</div>
+
       return (
          <Host>
             <div class="centered-body">
@@ -202,9 +205,6 @@ export class LoginPage {
                         type="password" 
                      />
                      <ion-button color="success" expand="block" onClick={async () => this.login()}>Login</ion-button>
-
-                    
-                     <div class="reset-password-link" onClick={async () => await this.resetPassword()}>Reset password</div>
 
                   </ion-card-content>
                </ion-card>

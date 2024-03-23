@@ -8,6 +8,7 @@ using System.Text;
 using HostAnnotation.Common;
 using HostAnnotation.Models;
 using HostAnnotation.Utilities;
+using static HostAnnotation.Common.Names;
 
 namespace HostAnnotation.DataProviders {
 
@@ -28,6 +29,38 @@ namespace HostAnnotation.DataProviders {
             // TODO
             return null;
         }
+
+
+        // Get a person's name using their account request token.
+        public string? getNameFromToken(Terms.account_request_type requestType_, string? token_) {
+            
+            if (Utils.isEmptyElseTrim(ref token_)) { return null; }
+
+            string? strRequestType = Terms.enumString(requestType_);
+            if (strRequestType == null) { throw SmartException.create("Unable to convert request type to a string"); }
+
+            var parameters = new List<SqlParameter>() {
+                Utils.createSqlParam("@token", SqlDbType.NVarChar, token_)
+            };
+
+            var sql = new StringBuilder();
+            sql.AppendLine("SELECT TOP 1 p.first_name ");
+            sql.AppendLine("FROM person p ");
+            sql.AppendLine("JOIN (");
+            sql.AppendLine("	SELECT TOP 1 ar.person_id AS person_id ");
+            sql.AppendLine("	FROM v_account_request ar ");
+            sql.AppendLine("	WHERE ar.token = @token ");
+            sql.AppendLine($"	AND ar.request_type = '{strRequestType}' ");
+            sql.AppendLine("	ORDER BY ar.requested_on DESC ");
+            sql.AppendLine(") request ON person_id = p.id ");
+
+            // Try to get the person's first name.
+            string? firstName = DbQueryManager.getSingleValue<string>(_dbConnectionString, sql.ToString(), parameters);
+            if (firstName == null) { throw SmartException.create("Unable to find an account for this token and request type"); }
+
+            return firstName;
+        }
+
 
         public bool processPasswordReset(string? password_, string? token_) {
 

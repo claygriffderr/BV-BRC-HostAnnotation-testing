@@ -1,7 +1,6 @@
 ﻿
-using System;
-using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 using HostAnnotation.Common;
 using HostAnnotation.Utilities;
@@ -13,6 +12,7 @@ namespace HostAnnotation.Models {
         [Useful("filtered_name", true)]
         public string? filteredName { get; set; }
 
+        [JsonIgnore]
         [Useful("id", true)]
         public int id { get; set; }
 

@@ -2,10 +2,26 @@
 import { IApiResponse } from "../models/IApiResponse";
 import { IResetPasswordResult } from "../models/IResetPasswordResult";
 import { WebService } from "./WebService";
-import { WebServiceKey } from "../global/Types";
+import { AccountRequestType, WebServiceKey } from "../global/Types";
 
 
 export class _AccountService {
+
+
+   // Get a person's first name using a request type and their account request token.
+   async getNameFromToken(requestType_: AccountRequestType, token_: string): Promise<string> {
+
+      const data = {
+         requestType: requestType_,
+         token: token_
+      }
+
+      const response = await WebService.postJSON<IApiResponse<string>>(WebServiceKey.getNameFromToken, data);
+      if (!response) { return null; }
+      if (response.statusCode !== "OK") { throw new Error(response.message); }
+
+      return response.data as string;
+   }
 
 
    async resetPassword(password_: string, token_: string): Promise<IResetPasswordResult> {

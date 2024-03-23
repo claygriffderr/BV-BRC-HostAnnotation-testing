@@ -4,6 +4,12 @@
 // Enums, most of which represent server-side terms
 //------------------------------------------------------------------------------------------------------
 
+export enum AccountRequestType {
+   invite_user = "invite_user",
+   reset_password = "reset_password",
+   verify_email = "verify_email"
+}
+
 export enum AppRole {
    administrator = "administrator",
    api_user = "api_user",
@@ -34,6 +40,25 @@ export enum CurationType {
    stop_word = "stop_word",
    subspecies_qualifier = "subspecies_qualifier",
    synonym = "synonym"
+}
+
+export function CurationTypeLookup(curationType_: CurationType): string {
+
+   if (!curationType_) { return null; }
+
+   switch (curationType_) {
+      case CurationType.alternate_spelling:
+         return "alternate spelling";
+      case CurationType.filtered_characters:
+         return "filtered characters";
+      case CurationType.stop_word:
+         return "stop word";
+      case CurationType.subspecies_qualifier:
+         return "subspecies qualifier";
+      case CurationType.synonym:
+         return "synonym";
+      default: return "";
+   }
 }
 
 // The names of all non-ionic icons.
@@ -172,8 +197,10 @@ export function NcbiNameClassLookup(nameClass_: NcbiNameClass): string {
 
 // All pages in the application.
 export enum PageKey {
+   adminHome = "admin/home",
    annotateHost = "annotateHost",
    createCuratedWord = "createCuratedWord",
+   createPerson = "admin/createPerson",
    curatedWords = "curation/curatedWords",
    editCuratedWord = "editCuratedWord",
    home = "curation/home",
@@ -266,10 +293,11 @@ export enum UserStatus {
 export enum WebServiceKey {
 
    // Account
+   getNameFromToken = "getNameFromToken",
    resetPassword =  "resetPassword",
    
    // Administrator services
-   // TODO
+   createPerson = "createPerson",
 
    // Annotation
    annotateHostText = "annotateHostText",

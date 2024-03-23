@@ -24,6 +24,7 @@ export class HostsPage {
    // however, if there are no results we will display a "No results" message.
    isBeforeSearch: boolean = true;
 
+   // The search panel Element.
    searchPanelEl: HTMLSearchPanelElement;
 
 
@@ -58,10 +59,12 @@ export class HostsPage {
          </tr>);
       })
 
-      const hostCount = this.hosts.length === 0 ? "1 result" : `${this.hosts.length} results`;
+      // Variables used when formatting the result count.
+      const resultCount = this.hosts.length;
+      const resultsText = this.hosts.length === 1 ? "result" : "results";
 
       return <div class="hosts-container">
-         <div class="data-table-result-count">Your search returned {hostCount}</div>
+         <div class="search-results-message">Your search returned <span class="search-results-count">{resultCount}</span> {resultsText}</div>
          <table class="hosts stripe cell-border">
             <thead>
                <tr>
@@ -79,39 +82,49 @@ export class HostsPage {
    // Initialize the data table object.
    async initializeDataTable() {
 
-      if (Array.isArray(this.hosts) && this.hosts.length > 0) {
-
-         if (!this.dataTable) {
-            this.dataTable = new DataTable("table.hosts", {
-               dom: "ltip",
-               lengthMenu: [20, 50, 100],
-               order: [], // Important: If this isn't an empty array it will move the child rows to the end!
-               pageLength: 50,
-               searching: false,
-               stripeClasses: []
-            });
-            
-            const tableEl = this.el.querySelector("table.hosts");
-            if (!tableEl) { throw new Error("Invalid table Element"); }
-
-            tableEl.addEventListener("click", async (event_: MouseEvent) => {
-
-               // Get the closest TR Element to the target Element.
-               const trEl = (event_.target as HTMLElement).closest(`tr`);
-               if (!trEl) { return; }
-               
-               const hostID = trEl.getAttribute("data-host-id");
-               if (!hostID) { return; }
-
-               event_.preventDefault();
-               event_.stopPropagation();
-
-               return await this.viewHost(hostID);
-           })
-
-         } else {
-            this.dataTable.draw();
+      if (!Array.isArray(this.hosts) || this.hosts.length < 1) {
+         if (!!this.dataTable) { 
+            this.dataTable.destroy(); 
+            this.dataTable = null;
          }
+
+         return;
+      }
+
+      if (!this.dataTable) {
+
+         // Initialize the data table object.
+         this.dataTable = new DataTable("table.hosts", {
+            dom: "ltip",
+            lengthMenu: [20, 50, 100],
+            order: [], // Important: If this isn't an empty array it will move the child rows to the end!
+            pageLength: 50,
+            searching: false,
+            stripeClasses: []
+         });
+         
+         const tableEl = this.el.querySelector("table.hosts");
+         if (!tableEl) { throw new Error("Invalid table Element"); }
+
+         tableEl.addEventListener("click", async (event_: MouseEvent) => {
+
+            // Get the closest TR Element to the target Element.
+            const trEl = (event_.target as HTMLElement).closest(`tr`);
+            if (!trEl) { return; }
+            
+            const hostID = trEl.getAttribute("data-host-id");
+            if (!hostID) { return; }
+
+            event_.preventDefault();
+            event_.stopPropagation();
+
+            return await this.viewHost(hostID);
+         })
+
+      } else {
+         
+         // Redraw the data table.
+         this.dataTable.draw();
       }
 
       return;
@@ -120,11 +133,22 @@ export class HostsPage {
 
    async search(searchText_: string) {
 
+      // Since we're recreating the HTML table, we need to destroy the dataTable.
+      // TODO: there's probably a way to use the DataTables API to allow the table to be
+      // recreated without destroying the dataTable, but I haven't found it.
+      if (!!this.dataTable) {
+         this.dataTable.destroy();
+         this.dataTable = null;
+      }
+
+      // Clear the host data so it can be replaced.
+      this.hosts = null;
+
       searchText_ = Utils.safeTrim(searchText_);
       if (!searchText_ || searchText_.length < 3) { alert("Please enter at least 3 characters"); return; }
 
       this.isBeforeSearch = false;
-
+      
       // Call the web service
       this.hosts = await AnnotationService.searchAnnotatedHosts(searchText_);
       return;
@@ -143,7 +167,6 @@ export class HostsPage {
             <div class="page-container">
                <authorized-header pageTitle="Hosts" controlType={HeaderControlType.menu}></authorized-header>
                <main>
-                  
                   <div class="data-table-panel">
 
                      <search-panel 
@@ -153,7 +176,6 @@ export class HostsPage {
                      ></search-panel>
 
                      {this.displayHosts()}
-
                   </div>
                </main>
             </div>

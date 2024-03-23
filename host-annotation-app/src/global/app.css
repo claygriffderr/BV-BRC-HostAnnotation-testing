@@ -84,8 +84,12 @@ main {
    width: 100vw;
 }
 
-.data-table-result-count {
+/* A panel above a data table that displays a message containing the number of results. */
+.search-results-message {
    margin-bottom: 1.0rem;
+}
+.search-results-count {
+   font-weight: bold;
 }
 
 /* Control(s) displayed above a data table or ion-card. */

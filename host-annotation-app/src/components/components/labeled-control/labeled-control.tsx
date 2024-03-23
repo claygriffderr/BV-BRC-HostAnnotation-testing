@@ -68,6 +68,27 @@ export class LabeledControl {
 
 
 
+   @Method()
+   async clearValue() {
+
+      switch (this.controlType) {
+
+         case ControlType.password:
+         case ControlType.text:
+         case ControlType.textArea:
+            (this.controlEl as HTMLInputElement).value = "";
+            return;
+
+         case ControlType.select:
+            (this.controlEl as HTMLSelectElement).value = ""; // TODO: is this correct?
+            return;
+            
+         default:
+            throw new Error(`Unhandled control type ${this.controlType}`);
+      }
+   }
+
+
    async componentDidLoad() {
 
       // Get the control Element

@@ -58,13 +58,15 @@ export class AppRoot {
 
          // Routes that don't require authentication.
          routes = [
-            <ion-route-redirect from="/" to="/login"></ion-route-redirect>,
+            <ion-route-redirect from="/" to={`/${PageKey.login}`}></ion-route-redirect>,
             <ion-route url={`/${PageKey.login}`} component="login-page"></ion-route>,
             <ion-route url={`/${PageKey.resetPassword}`} component="reset-password-page"></ion-route>,
             <ion-route url="*" component="login-page"></ion-route>
          ];
 
       } else {
+
+         console.log(`this.authState.appRole = ${this.authState.appRole}`)
 
          switch (this.authState.appRole) {
 
@@ -115,9 +117,13 @@ export class AppRoot {
 
             case AppRole.administrator:
 
+               console.log("administrator routes")
+
                // Admin routes
                routes = [
-                  <ion-route-redirect from="/" to="/admin/home"></ion-route-redirect>
+                  <ion-route-redirect from="/" to={`/${PageKey.adminHome}`}></ion-route-redirect>,
+                  <ion-route url={`/${PageKey.adminHome}`} component="admin-home-page"></ion-route>,
+                  <ion-route url={`/${PageKey.createPerson}`} component="admin-create-person-page"></ion-route> 
                ];
 
                break;
@@ -137,7 +143,7 @@ export class AppRoot {
 
       return (
          <ion-app>
-            <ion-router useHash={false}>{routes}</ion-router>
+            <ion-router useHash={true}>{routes}</ion-router>
             <ion-nav></ion-nav>
          </ion-app>
       )

@@ -1,9 +1,10 @@
 
-import { Component, Element, Host, h } from '@stencil/core';
+import { Component, Element, Host, h, State } from '@stencil/core';
 import { CuratedWordsService } from '../../../services/CuratedWordsService';
 import DataTable from 'datatables.net-dt';
-import { CurationType, HeaderControlType, PageKey } from "../../../global/Types";
+import { CurationType, CurationTypeLookup, HeaderControlType, PageKey } from "../../../global/Types";
 import { ICuratedWord } from "../../../models/ICuratedWord";
+import { Utils }  from "../../../helpers/Utils";
 //import { Router } from "../../../helpers/Router";
 //import { Settings } from "../../../global/Settings";
 
@@ -14,154 +15,159 @@ import { ICuratedWord } from "../../../models/ICuratedWord";
 })
 export class CuratedWordsPage {
 
-   dataTable;
+   dataTable: any;
 
    @Element() el: HTMLCuratedWordsPageElement;
 
    filterTypesEl: HTMLSelectElement;
 
-   // The "no data available" Element.
-   noDataEl: HTMLElement;
+   // When the page loads (before searching occurs) empty data is expected. After the search,
+   // however, if there are no results we will display a "No results" message.
+   isBeforeSearch: boolean = true;
 
-   // The tbody Element of the words table.
-   tableBodyEl: HTMLElement;
+   searchPanelEl: HTMLSearchPanelElement;
 
-   tableContainerEl: HTMLTableElement;
+   @State() words: ICuratedWord[];
 
-   words: ICuratedWord[];
-
-   
-
-   
-
-
+  
+   // Add a new curated word.
    addWord() {
       alert("Not yet implemented")
       //Router.push(`/${PageKey.createCuratedWord}`, "forward")
    }
 
+
    async componentDidLoad() {
-
-      this.filterTypesEl = this.el.querySelector(".filter-types");
-      if (!this.filterTypesEl) { console.error("Invalid filter types Element"); }
-
-      this.noDataEl = this.el.querySelector(".no-data");
-      if (!this.noDataEl) { console.error("Invalid no-data Element"); }
-
-      this.tableBodyEl = this.el.querySelector("table.words tbody");
-      if (!this.tableBodyEl) { console.error("Invalid tbody Element"); }
-
-      this.tableContainerEl = this.el.querySelector(".table-container");
-      if (!this.tableContainerEl) { console.error("Invalid table container Element"); }
-
-
-      this.tableBodyEl.addEventListener("click", async (event_: MouseEvent) => {
-
-         // Get the closest TR Element to the target Element.
-         const trEl = (event_.target as HTMLElement).closest(`tr`);
-         if (!trEl) { return; }
-         
-         const wordUID = trEl.getAttribute("data-uid");
-         if (!wordUID) { return; }
-
-         event_.preventDefault();
-         event_.stopPropagation();
-
-         await this.editWord(wordUID);
-      })
-
-      
-      this.tableContainerEl.setAttribute("data-is-visible", "false");
-      
+      await this.initializeDataTable();
       return;
    }
 
-   displayTable() {
+   async componentDidUpdate() {
+      await this.initializeDataTable();
+      return;
+   }
+
+   displayWords() {
 
       if (!Array.isArray(this.words) || this.words.length < 1) {
-         // Display the "no data available" panel. 
-         this.tableContainerEl.setAttribute("data-is-visible", "false");
-         this.noDataEl.setAttribute("data-is-visible", "true");
-         return;
+         const noDataText = this.isBeforeSearch ? "" : "No results";
+         return <div class="no-data">{noDataText}</div>; 
       }
 
-      // Display the words table.
-      this.tableContainerEl.setAttribute("data-is-visible", "true");
-      this.noDataEl.setAttribute("data-is-visible", "false");
-
-      if (this.dataTable != null) { this.dataTable.clear(); }
-
-      // Clear the tbody of existing rows.
-      //this.tableBodyEl.textContent = "";
+      let rows = [];
 
       this.words.forEach((word_: ICuratedWord) => {
 
-         const type = word_.type.replace("_", " ");
+         const typeLabel = CurationTypeLookup(word_.type);
 
-         const tr = document.createElement("tr");
-         tr.setAttribute("data-uid", word_.uid);
-
-         const typeColumn = document.createElement("td");
-         typeColumn.innerHTML = type;
-         tr.appendChild(typeColumn);
-
-         const searchColumn = document.createElement("td");
-         searchColumn.innerHTML = word_.searchText;
-         tr.appendChild(searchColumn);
-
-         const replaceColumn = document.createElement("td");
-         replaceColumn.innerHTML = word_.alternateText;
-         tr.appendChild(replaceColumn);
-
-         if (this.dataTable != null) {
-            this.dataTable.row.add(tr);
-         } else {
-            this.tableBodyEl.appendChild(tr);
-         }
+         rows.push(<tr data-uid={word_.uid}>
+            <td>{typeLabel}</td>
+            <td>{word_.searchText}</td>
+            <td>{word_.alternateText}</td>
+         </tr>);
       })
 
-      if (this.dataTable == null) {
+      // Variables used when formatting the result count.
+      const resultCount = this.words.length;
+      const resultsText = this.words.length === 1 ? "result" : "results";
 
-         // Initialize the data table.
+      return <div class="words-container">
+         <div class="search-results-message">Your search returned <span class="search-results-count">{resultCount}</span> {resultsText}</div>
+         <table class="words stripe cell-border">
+            <thead>
+               <tr>
+                  <th>Type</th>
+                  <th>Search for</th>
+                  <th>Replace with</th>
+               </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+         </table>
+      </div>;
+   }
+
+   
+   // Initialize the data table object.
+   async initializeDataTable() {
+
+      if (!Array.isArray(this.words) || this.words.length < 1) {
+         if (!!this.dataTable) { 
+            this.dataTable.destroy(); 
+            this.dataTable = null;
+         }
+
+         return;
+      }
+
+      if (!this.dataTable) {
+
+         // Initialize the data table object.
          this.dataTable = new DataTable("table.words", {
             dom: "ltip",
+            lengthMenu: [20, 50, 100],
             order: [], // Important: If this isn't an empty array it will move the child rows to the end!
+            pageLength: 50,
             searching: false,
             stripeClasses: []
-         });   
+         });
+         
+         const tableEl = this.el.querySelector("table.words");
+         if (!tableEl) { throw new Error("Invalid table Element"); }
+
+         tableEl.addEventListener("click", async (event_: MouseEvent) => {
+
+            // Get the closest TR Element to the target Element.
+            const trEl = (event_.target as HTMLElement).closest(`tr`);
+            if (!trEl) { return; }
+            
+            const wordUID = trEl.getAttribute("data-uid");
+            if (!wordUID) { return; }
+
+            event_.preventDefault();
+            event_.stopPropagation();
+
+            return await this.viewCuratedWord(wordUID);
+         })
 
       } else {
+         
          // Redraw the data table.
          this.dataTable.draw();
       }
+
+      return;
+   }
+
+   async search(searchText_: string) {
+
+      // Since we're recreating the HTML table, we need to destroy the dataTable.
+      // TODO: there's probably a way to use the DataTables API to allow the table to be
+      // recreated without destroying the dataTable, but I haven't found it.
+      if (!!this.dataTable) {
+         this.dataTable.destroy();
+         this.dataTable = null;
+      }
+
+      // Clear the word data so it can be replaced.
+      this.words = null;
+
+      // Get and trim the search text.
+      searchText_ = Utils.safeTrim(searchText_);
       
+      this.isBeforeSearch = false;
+
+      // Look for a filter type selection.
+      let type = !this.filterTypesEl ? null : this.filterTypesEl.value as CurationType;
+
+      // Call the web service
+      this.words = await CuratedWordsService.searchCuratedWords(searchText_, type);
       return;
    }
 
    // Navigate to the "edit curated word" page.
-   async editWord(uid_: string) {
-      console.log(`TODO: edit word ${uid_}`)
+   async viewCuratedWord(uid_: string) {
+      console.log(`TODO: view/edit word ${uid_}`)
       //return Router.push(`/${PageKey.editCuratedWord}?wordUID=${uid_}`, "forward");
-   }
-
-
-   async search(searchText_: string) {
-
-      console.log(`in curated words search with text ${searchText_}`)
-
-      let type = null;
-
-      // Look for a filter type selection.
-      if (!!this.filterTypesEl) { type = this.filterTypesEl.value; }
-
-      // TODO: get search text.
-
-
-      this.words = await CuratedWordsService.searchCuratedWords(searchText_, type);
-
-      this.displayTable();
-
-      return;
    }
 
 
@@ -178,13 +184,13 @@ export class CuratedWordsPage {
 
                         <div class="filter-panel">
                            <label>Display</label>&nbsp;
-                           <select class="filter-types">
+                           <select class="filter-types" ref={el_ => this.filterTypesEl = el_}>
                               <option value="" selected>all types</option>
-                              <option value={CurationType.alternate_spelling}>alternate spellings</option>
-                              <option value={CurationType.filtered_characters}>filtered characters</option>
-                              <option value={CurationType.stop_word}>stop words</option>
-                              <option value={CurationType.subspecies_qualifier}>subspecies qualifiers</option>
-                              <option value={CurationType.synonym}>synonynms</option>
+                              <option value={CurationType.alternate_spelling}>{CurationTypeLookup(CurationType.alternate_spelling)}</option>
+                              <option value={CurationType.filtered_characters}>{CurationTypeLookup(CurationType.filtered_characters)}</option>
+                              <option value={CurationType.stop_word}>{CurationTypeLookup(CurationType.stop_word)}</option>
+                              <option value={CurationType.subspecies_qualifier}>{CurationTypeLookup(CurationType.subspecies_qualifier)}</option>
+                              <option value={CurationType.synonym}>{CurationTypeLookup(CurationType.synonym)}</option>
                            </select>
                         </div>
 
@@ -194,23 +200,13 @@ export class CuratedWordsPage {
                         </ion-button>
                      </div>
 
-                     <search-panel pageKey={PageKey.curatedWords} searchCallback={this.search.bind(this)}></search-panel>
+                     <search-panel 
+                        pageKey={PageKey.curatedWords}
+                        ref={el_ => this.searchPanelEl = el_}
+                        searchCallback={this.search.bind(this)}>
+                     </search-panel>
 
-                     <div class="no-data" data-is-visible="false">No results</div>
-
-                     <div class="table-container" data-is-visible="false">
-                        <table class="words stripe cell-border">
-                           <thead>
-                              <tr>
-                                 <th>Type</th>
-                                 <th>Search for</th>
-                                 <th>Replace with</th>
-                              </tr>
-                           </thead>
-                           <tbody></tbody>
-                        </table>
-                     </div>
-
+                     {this.displayWords()}
                   </div>
                </main>
             </div>

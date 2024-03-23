@@ -16,6 +16,8 @@ export { ISearchCallback } from "./components/components/search-panel/Common";
 export namespace Components {
     interface AboutPage {
     }
+    interface AdminCreatePersonPage {
+    }
     interface AdminHomePage {
     }
     interface AdminSideMenu {
@@ -85,6 +87,7 @@ export namespace Components {
     interface LabeledControl {
         "attributeKey": string;
         "changeHandler": IChangeHandler;
+        "clearValue": () => Promise<void>;
         "controlType": ControlType1;
         "getValue": () => Promise<string>;
         "initialValue": any;
@@ -139,6 +142,12 @@ declare global {
     var HTMLAboutPageElement: {
         prototype: HTMLAboutPageElement;
         new (): HTMLAboutPageElement;
+    };
+    interface HTMLAdminCreatePersonPageElement extends Components.AdminCreatePersonPage, HTMLStencilElement {
+    }
+    var HTMLAdminCreatePersonPageElement: {
+        prototype: HTMLAdminCreatePersonPageElement;
+        new (): HTMLAdminCreatePersonPageElement;
     };
     interface HTMLAdminHomePageElement extends Components.AdminHomePage, HTMLStencilElement {
     }
@@ -328,6 +337,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "about-page": HTMLAboutPageElement;
+        "admin-create-person-page": HTMLAdminCreatePersonPageElement;
         "admin-home-page": HTMLAdminHomePageElement;
         "admin-side-menu": HTMLAdminSideMenuElement;
         "annotate-host-page": HTMLAnnotateHostPageElement;
@@ -363,6 +373,8 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AboutPage {
+    }
+    interface AdminCreatePersonPage {
     }
     interface AdminHomePage {
     }
@@ -478,6 +490,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "about-page": AboutPage;
+        "admin-create-person-page": AdminCreatePersonPage;
         "admin-home-page": AdminHomePage;
         "admin-side-menu": AdminSideMenu;
         "annotate-host-page": AnnotateHostPage;
@@ -516,6 +529,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "about-page": LocalJSX.AboutPage & JSXBase.HTMLAttributes<HTMLAboutPageElement>;
+            "admin-create-person-page": LocalJSX.AdminCreatePersonPage & JSXBase.HTMLAttributes<HTMLAdminCreatePersonPageElement>;
             "admin-home-page": LocalJSX.AdminHomePage & JSXBase.HTMLAttributes<HTMLAdminHomePageElement>;
             "admin-side-menu": LocalJSX.AdminSideMenu & JSXBase.HTMLAttributes<HTMLAdminSideMenuElement>;
             "annotate-host-page": LocalJSX.AnnotateHostPage & JSXBase.HTMLAttributes<HTMLAnnotateHostPageElement>;

@@ -23,17 +23,18 @@ export class _Settings {
 
    // The base URL for web services. 
    // TODO: this should be populated by src/global/app-dev.ts (dev build) or src/global/app.ts (production build).
-   webServiceBaseURL: string = "https://localhost:7221/";
+   webServiceBaseURL: string = "https://dev.ictv.global/HostAnnotation/"; // "https://localhost:7221/";
 
    
    // A lookup from web service keys to web service URLs (not including the full path).
    webServiceLookup: { [key_ in WebServiceKey]: string } = {
 
       // Account
+      getNameFromToken: "getNameFromToken",
       resetPassword: "resetPassword",
       
       // Administrator services
-      // TODO
+      createPerson: "createPerson",
 
       // Annotation
       annotateHostText: "annotateHostText",

@@ -38,7 +38,12 @@ namespace HostAnnotation.Services {
         public string generateNewToken() { return Guid.NewGuid().ToString().Replace("-", ""); }
 
 
+        // Get a person's first name using a request type and their account request token.
+        public string? getNameFromToken(Terms.account_request_type requestType_, string? token_) {
+            return _dataProvider.getNameFromToken(requestType_, token_);
+        }
       
+
         // Process a user's password reset request.
         public bool processPasswordReset(ref string? message_, string? password_, string? token_) {
 
